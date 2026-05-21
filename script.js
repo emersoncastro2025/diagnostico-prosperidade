@@ -766,3 +766,4 @@ if (document.readyState === 'loading') {
 } else {
   app.init();
 }
+/* Force Vercel redeploy - 1779403828 */
