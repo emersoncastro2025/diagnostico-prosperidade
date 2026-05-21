@@ -75,7 +75,7 @@ git push origin main
 
 **URL de Produção:**
 ```
-https://diagnostico-prosperidade.vercel.app
+https://diagnostico-prosperidade3.vercel.app
 ```
 
 **Últimas Mudanças Deployadas:**
@@ -113,7 +113,7 @@ Agora você pode:
 **Auto-deploy está ativo!** 
 Toda vez que você faz push para o GitHub, o Vercel automaticamente faz deploy em produção.
 
-**URL Live:** https://diagnostico-prosperidade.vercel.app
+**URL Live:** https://diagnostico-prosperidade3.vercel.app
 
 ---
 

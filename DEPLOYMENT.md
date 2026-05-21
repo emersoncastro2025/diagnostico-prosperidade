@@ -56,7 +56,7 @@ vercel
 
 Você terá uma URL como:
 ```
-https://diagnostico-prosperidade.vercel.app
+https://diagnostico-prosperidade3.vercel.app
 ```
 
 **Tudo estará funcionando:**
