@@ -635,17 +635,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
   margin-bottom: 40px;
-  padding: 0 10px;
-  font-size: 0.85rem;
+  padding: 15px 0;
+  font-size: 0.9rem;
   color: var(--color-text-secondary);
+  font-weight: 500;
 }
 
 .quiz-scale span {
   flex: 1;
   text-align: center;
-  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .quiz-options {

@@ -316,8 +316,8 @@ const app = {
       </div>
 
       <div class="quiz-scale">
-        <span>🔴<br/>Discordo totalmente</span>
-        <span>Concordo totalmente<br/>🟢</span>
+        <span>🔴 Discordo totalmente</span>
+        <span>Concordo totalmente 🟢</span>
       </div>
 
       <div class="quiz-options" id="quizOptions">
