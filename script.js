@@ -108,23 +108,29 @@ const app = {
 
   async sendToWebhook(data) {
     try {
+      console.log('📤 Iniciando envio para DataCrazy...', data);
+
       const response = await fetch(this.webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(data)
       });
 
+      console.log('📨 Resposta recebida:', response.status, response.statusText);
+
       if (response.ok) {
-        console.log('Dados enviados para DataCrazy com sucesso');
+        console.log('✅ Dados enviados para DataCrazy com sucesso!', response);
         return true;
       } else {
-        console.warn('Erro ao enviar para DataCrazy:', response.status);
+        const responseText = await response.text();
+        console.warn('⚠️ Erro ao enviar para DataCrazy:', response.status, responseText);
         return false;
       }
     } catch (error) {
-      console.error('Erro ao enviar webhook:', error);
+      console.error('❌ Erro ao enviar webhook:', error);
       return false;
     }
   },
@@ -148,6 +154,8 @@ const app = {
       },
       timestamp: new Date().toISOString()
     };
+
+    console.log('🚀 Preparando envio para DataCrazy:', webhookData);
 
     // Enviar para webhook
     this.sendToWebhook(webhookData);
