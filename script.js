@@ -157,6 +157,20 @@ const app = {
 
     console.log('🚀 Preparando envio para DataCrazy:', webhookData);
 
+    // Armazenar localmente para debug
+    try {
+      const storedData = JSON.parse(localStorage.getItem('diagnostic_submissions') || '[]');
+      storedData.push({
+        ...webhookData,
+        submitted_at: new Date().toISOString(),
+        webhook_url: this.webhookUrl
+      });
+      localStorage.setItem('diagnostic_submissions', JSON.stringify(storedData));
+      console.log('💾 Dados armazenados localmente. Total de submissões:', storedData.length);
+    } catch (e) {
+      console.warn('⚠️ Não foi possível armazenar dados localmente:', e);
+    }
+
     // Enviar para webhook
     this.sendToWebhook(webhookData);
   },
@@ -497,6 +511,11 @@ const app = {
       <div class="next-step-card">
         <div class="next-step-title">📍 Próximo Passo</div>
         <div class="next-step-description">${levelData.nextStep}</div>
+      </div>
+
+      <div style="margin-top: 30px; padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 0.85rem; color: #999;">
+        <div>✓ Seus dados foram capturados e armazenados</div>
+        <div>📤 Enviando para DataCrazy CRM...</div>
       </div>
 
       <button class="result-button" data-action="restartDiagnosis">
