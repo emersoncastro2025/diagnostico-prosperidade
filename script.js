@@ -120,7 +120,7 @@ const app = {
         body: JSON.stringify(data)
       });
 
-      console.log('📨 Resposta recebida:', response.status, response.statusText);
+      console.log('📨 Resposta recebida:', response.status, response.statusText, 'com Authorization header');
 
       if (response.ok) {
         console.log('✅ Dados enviados para DataCrazy com sucesso!', response);
