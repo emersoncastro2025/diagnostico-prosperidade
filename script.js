@@ -114,7 +114,8 @@ const app = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': 'Bearer webhook-integration'
         },
         body: JSON.stringify(data)
       });
