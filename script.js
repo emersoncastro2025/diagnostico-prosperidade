@@ -312,7 +312,6 @@ const app = {
       <div class="quiz-question">
         <div class="quiz-number">${currentQuestion.id}</div>
         <p class="quiz-question-text">${currentQuestion.text}</p>
-        ${currentQuestion.inverted ? '<p style="font-size: 0.85rem; color: var(--color-gold); margin-top: 10px;">⚠️ Pergunta invertida</p>' : ''}
       </div>
 
       <div class="quiz-scale">
