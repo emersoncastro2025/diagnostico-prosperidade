@@ -99,9 +99,58 @@ const app = {
     }
   },
 
+  webhookUrl: 'https://api.datacrazy.io/v1/crm/api/crm/integrations/webhook/business/2ec20b7f-0a1f-49a1-953b-5120dfef8118',
+
   init() {
     this.render();
     this.attachEventListeners();
+  },
+
+  async sendToWebhook(data) {
+    try {
+      const response = await fetch(this.webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        console.log('Dados enviados para DataCrazy com sucesso');
+        return true;
+      } else {
+        console.warn('Erro ao enviar para DataCrazy:', response.status);
+        return false;
+      }
+    } catch (error) {
+      console.error('Erro ao enviar webhook:', error);
+      return false;
+    }
+  },
+
+  sendWebhookData(result, levelData) {
+    const webhookData = {
+      name: this.userData.name,
+      whatsapp: this.userData.whatsapp,
+      instagram: this.userData.instagram,
+      area: this.userData.area,
+      income: this.userData.income,
+      diagnostic_result: {
+        level: result.level,
+        level_name: levelData.name,
+        score: parseFloat(result.score.toFixed(1)),
+        pillars: {
+          fazer_dinheiro_novo: parseFloat(result.pillars.fé.toFixed(1)),
+          administrar: parseFloat(result.pillars.mentalidade.toFixed(1)),
+          multiplicar_riqueza: parseFloat(result.pillars.caráter.toFixed(1))
+        }
+      },
+      timestamp: new Date().toISOString()
+    };
+
+    // Enviar para webhook
+    this.sendToWebhook(webhookData);
   },
 
   render() {
@@ -356,6 +405,9 @@ const app = {
   createResultScreen() {
     const result = this.calculateResult();
     const levelData = this.levels[result.level];
+
+    // Enviar dados para o webhook DataCrazy
+    this.sendWebhookData(result, levelData);
 
     const screen = document.createElement('div');
     screen.className = 'screen result-screen';
