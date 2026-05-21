@@ -72,8 +72,8 @@ const app = {
   levels: {
     1: {
       name: 'Sobrevivente',
-      minScore: 1.0,
-      maxScore: 2.4,
+      minScore: 0,
+      maxScore: 3.5,
       verse: '"Nunca vi desamparado o justo, nem a sua descendência mendigar o pão." — Salmos 37:25',
       description: 'Você está no nível de Sobrevivente — focado em suprir as necessidades básicas do dia a dia. Sua mentalidade ainda é de carência e proteção. Deus promete que suas necessidades não faltarão, mas é hora de evoluir. Você precisa fortalecer sua fé em Deus, reorganizar sua vida financeira com intenção e começar a mudar sua mentalidade de escassez para mentalidade de conquistador(a).',
       nextStep: 'Fortaleça sua base espiritual: estude os princípios bíblicos do dinheiro, organize seu orçamento, comece a dizimar com fé e mude sua mentalidade de sobrevivência para prosperidade.',
@@ -81,8 +81,8 @@ const app = {
     },
     2: {
       name: 'Conquistador',
-      minScore: 2.5,
-      maxScore: 3.9,
+      minScore: 3.5,
+      maxScore: 4.5,
       verse: '"Sede fortes e corajosos. Não tenhais medo nem vos assusteis, porque o Senhor, vosso Deus, vai convosco." — Josué 1:9',
       description: 'Você é um(a) Conquistador(a)! Já saiu da mentalidade de sobrevivência e tem coragem de sonhar, agir e conquistar sua terra prometida. Você realiza objetivos, desfruta dos frutos e está em crescimento. Você tem fé ativa e mentalidade de abundância. O próximo nível exige que você desenvolva caráter ainda mais sólido e se prepare para impactar outras vidas — é hora de pensar além de você mesmo.',
       nextStep: 'Aprofunde seu caráter e integridade: invista continuamente em seu desenvolvimento pessoal, fortaleça relacionamentos de qualidade e comece a pensar estrategicamente em como sua prosperidade pode gerar impacto e oportunidades para outros.',
@@ -90,10 +90,10 @@ const app = {
     },
     3: {
       name: 'Governante',
-      minScore: 4.0,
+      minScore: 4.5,
       maxScore: 5.0,
       verse: '"E o Senhor estava com José, e ele foi um homem próspero." — Gênesis 39:2',
-      description: 'Você é um(a) Governante! Atingiu o nível máximo de prosperidade bíblica. Como José, você desenvolveu caráter sólido, habilidades únnicas e está preparado(a) para receber e executar estratégias de Deus que transformam vidas. Sua prosperidade transcende você — gera emprego, impacto, legado e referência. Você é uma bênção para multidões e seu governo é sinal da sabedoria e favor de Deus.',
+      description: 'Você é um(a) Governante! Atingiu o nível máximo de prosperidade bíblica. Como José, você desenvolveu caráter sólido, habilidades únicas e está preparado(a) para receber e executar estratégias de Deus que transformam vidas. Sua prosperidade transcende você — gera emprego, impacto, legado e referência. Você é uma bênção para multidões e seu governo é sinal da sabedoria e favor de Deus.',
       nextStep: 'Mantenha-se humilde, íntegro(a) e conectado(a) a Deus. Cultive liderança servidora, expanda seu impacto estrategicamente e prepare a próxima geração para governar com excelência e propósito.',
       icon: '🟢'
     }
@@ -562,22 +562,16 @@ const app = {
     // Calcular score geral
     const score = (pillars.fé + pillars.mentalidade + pillars.caráter) / 3;
 
-    // Encontrar o pilar mais fraco
-    const minPillar = Math.min(pillars.fé, pillars.mentalidade, pillars.caráter);
-
-    // Determinar nível com lógica mais sofisticada
-    // O pilar mais fraco é crítico - determina o teto máximo do nível
+    // Determinar nível baseado no score geral
+    // Novas faixas: Sobrevivente (≤3.5) | Conquistador (3.5-4.5) | Governante (>4.5)
     let level = 1;
 
-    if (minPillar < 2.0) {
-      // Pilar crítico muito baixo → Sobrevivente
-      level = 1;
-    } else if (minPillar < 3.5) {
-      // Pilar crítico moderado → máximo Conquistador
-      level = score >= 2.5 ? 2 : 1;
+    if (score <= 3.5) {
+      level = 1; // Sobrevivente
+    } else if (score <= 4.5) {
+      level = 2; // Conquistador
     } else {
-      // Pilar crítico forte → pode ser Governante
-      level = score >= 4.0 ? 3 : (score >= 2.5 ? 2 : 1);
+      level = 3; // Governante
     }
 
     return { score, pillars, level };
