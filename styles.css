@@ -14,6 +14,10 @@
   --color-gold-light: #E8D5A3;
   --color-gold-dark: #9B8327;
 
+  --color-level0: #8B4444;
+  --color-level0-bg: #1A0F0F;
+  --color-level0-border: #8B4444;
+
   --color-level1: #5B9FBD;
   --color-level1-bg: #0F1D2E;
   --color-level1-border: #5B9FBD;
@@ -296,6 +300,11 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.level-card.level-0 {
+  border-color: var(--color-level0-border);
+  background: linear-gradient(135deg, rgba(139, 68, 68, 0.1) 0%, var(--color-level0-bg) 100%);
+}
+
 .level-card.level-1 {
   border-color: var(--color-level1-border);
   background: linear-gradient(135deg, rgba(91, 159, 189, 0.1) 0%, var(--color-level1-bg) 100%);
@@ -320,6 +329,11 @@ body {
   margin-bottom: 10px;
 }
 
+.level-badge.level-0 {
+  background-color: var(--color-level0-border);
+  color: var(--color-level0);
+}
+
 .level-badge.level-1 {
   background-color: var(--color-level1-border);
   color: var(--color-level1);
@@ -339,6 +353,10 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   margin: 10px 0;
+}
+
+.level-title.level-0 {
+  color: var(--color-level0);
 }
 
 .level-title.level-1 {

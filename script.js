@@ -71,12 +71,21 @@ const app = {
   ],
 
   levels: {
+    0: {
+      name: 'Escravo',
+      minScore: 0,
+      maxScore: 2.5,
+      verse: '"Quem deve é escravo do seu credor." — Provérbios 22:7',
+      description: 'Você está no nível de Escravo — preso à mentalidade de consumismo, dívidas e busca constante de provisão. Sua vida é controlada por necessidades imediatas e desejos insatisfeitos. Você está em completa dependência de fontes externas e sem controle sobre seu dinheiro. Mas há esperança! Deus deseja libertá-lo dessa escravidão. É hora de quebrar esse ciclo, reconhecer o problema e tomar decisões radicais para mudar seu futuro.',
+      nextStep: 'Tome uma decisão corajosa de mudança: identifique suas dívidas, reduza gastos com o supérfluo, busque orientação financeira e espiritual, e comece a exercer domínio sobre seus impulsos e finanças. A liberdade começa com uma decisão.',
+      icon: '⚫'
+    },
     1: {
       name: 'Sobrevivente',
-      minScore: 0,
+      minScore: 2.5,
       maxScore: 3.5,
       verse: '"Nunca vi desamparado o justo, nem a sua descendência mendigar o pão." — Salmos 37:25',
-      description: 'Você está no nível de Sobrevivente — focado em suprir as necessidades básicas do dia a dia. Sua mentalidade ainda é de carência e proteção. Deus promete que suas necessidades não faltarão, mas é hora de evoluir. Você precisa fortalecer sua fé em Deus, reorganizar sua vida financeira com intenção e começar a mudar sua mentalidade de escassez para mentalidade de conquistador(a).',
+      description: 'Você está no nível de Sobrevivente — focado em suprir as necessidades básicas do dia a dia. Sua mentalidade ainda é de carência e proteção, mas você saiu do ciclo de escravidão. Deus promete que suas necessidades não faltarão, mas é hora de evoluir. Você precisa fortalecer sua fé em Deus, reorganizar sua vida financeira com intenção e começar a mudar sua mentalidade de escassez para mentalidade de conquistador(a).',
       nextStep: 'Fortaleça sua base espiritual: estude os princípios bíblicos do dinheiro, organize seu orçamento, comece a dizimar com fé e mude sua mentalidade de sobrevivência para prosperidade.',
       icon: '🔵'
     },
@@ -240,8 +249,13 @@ const app = {
         </div>
       </div>
 
-      <h2 class="section-title">Os 3 Níveis da Prosperidade</h2>
+      <h2 class="section-title">Os 4 Níveis da Prosperidade</h2>
       <div class="cards-grid">
+        <div class="card level-card level-0">
+          <div class="level-badge level-0">Nível 0</div>
+          <div class="level-title level-0">Escravo</div>
+          <div class="card-description">Preso à dívida e consumismo. Busca constante de provisão. Dependência externa.</div>
+        </div>
         <div class="card level-card level-1">
           <div class="level-badge level-1">Nível 1</div>
           <div class="level-title level-1">Sobrevivente</div>
@@ -634,10 +648,12 @@ const app = {
     const score = (pillars.fé + pillars.mentalidade + pillars.caráter) / 3;
 
     // Determinar nível baseado no score geral
-    // Novas faixas: Sobrevivente (≤3.5) | Conquistador (3.5-4.5) | Governante (>4.5)
-    let level = 1;
+    // Faixas: Escravo (≤2.5) | Sobrevivente (2.5-3.5) | Conquistador (3.5-4.5) | Governante (>4.5)
+    let level = 0;
 
-    if (score <= 3.5) {
+    if (score <= 2.5) {
+      level = 0; // Escravo
+    } else if (score <= 3.5) {
       level = 1; // Sobrevivente
     } else if (score <= 4.5) {
       level = 2; // Conquistador
