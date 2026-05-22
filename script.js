@@ -510,16 +510,6 @@ const app = {
         </div>
       </div>
 
-      <div class="next-step-card">
-        <div class="next-step-title">📍 Próximo Passo</div>
-        <div class="next-step-description">${levelData.nextStep}</div>
-      </div>
-
-      <div style="margin-top: 30px; padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 0.85rem; color: #999;">
-        <div>✓ Seus dados foram capturados e armazenados</div>
-        <div>📤 Enviando para DataCrazy CRM...</div>
-      </div>
-
       <button class="result-button" data-action="restartDiagnosis">
         ↻ Refazer diagnóstico
       </button>
