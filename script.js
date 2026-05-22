@@ -1,6 +1,7 @@
 // ============================================
 // DIAGNÓSTICO DOS 3 NÍVEIS DA PROSPERIDADE
 // Script Principal
+// VERSION: 2.1 - WITH DATACRAZY WEBHOOK AUTHENTICATION
 // ============================================
 
 const app = {
