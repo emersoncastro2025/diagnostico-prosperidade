@@ -212,3 +212,7 @@ const profiles = [
     icon: '🟢'
   }
 ];
+
+// Exportar para window para acessível pelo script.js
+window.questions = questions;
+window.profiles = profiles;
