@@ -1,7 +1,7 @@
 // ============================================
-// DIAGNÓSTICO DOS 3 NÍVEIS DA PROSPERIDADE
-// Script Principal
-// VERSION: 2.1 - WITH DATACRAZY WEBHOOK AUTHENTICATION
+// DIAGNÓSTICO DE PROSPERIDADE FINANCEIRA
+// Script Principal - Versão 3.0
+// Sistema de 15 perguntas com pontuação 0-3
 // ============================================
 
 const app = {
@@ -15,98 +15,15 @@ const app = {
   },
   answers: {},
   chartInstance: null,
+  currentQuestionIndex: 0,
 
-  questions: [
-    {
-      id: 1,
-      pillar: 'fé',
-      text: 'Dízimo e oferto regularmente, mesmo quando o dinheiro está curto.'
-    },
-    {
-      id: 2,
-      pillar: 'fé',
-      text: 'Tomo decisões financeiras buscando orientação em Deus, não só na lógica.'
-    },
-    {
-      id: 3,
-      pillar: 'fé',
-      text: 'Tenho paz em relação ao dinheiro, não vivo com ansiedade ou medo do futuro.'
-    },
-    {
-      id: 4,
-      pillar: 'mentalidade',
-      text: 'Sei exatamente quanto entra e quanto sai do meu dinheiro todo mês.'
-    },
-    {
-      id: 5,
-      pillar: 'mentalidade',
-      text: 'Tenho dívidas que me impedem de avançar financeiramente.',
-      inverted: true
-    },
-    {
-      id: 6,
-      pillar: 'mentalidade',
-      text: 'Consigo guardar dinheiro todos os meses, mesmo que seja pouco.'
-    },
-    {
-      id: 7,
-      pillar: 'mentalidade',
-      text: 'Acredito que posso ganhar mais do que ganho hoje — e estou fazendo algo para isso.'
-    },
-    {
-      id: 8,
-      pillar: 'caráter',
-      text: 'Invisto dinheiro todo mês — em aplicações, negócio ou desenvolvimento pessoal.'
-    },
-    {
-      id: 9,
-      pillar: 'caráter',
-      text: 'Tenho metas financeiras claras para os próximos 12 meses e um plano real para atingi-las.'
-    },
-    {
-      id: 10,
-      pillar: 'caráter',
-      text: 'Minha prosperidade já impacta ou está sendo preparada para impactar a vida de outras pessoas.'
-    }
-  ],
+  // Importar as perguntas do arquivo questions.js (carregado via <script>)
+  get questions() {
+    return typeof window !== 'undefined' && window.questions ? window.questions : [];
+  },
 
-  levels: {
-    0: {
-      name: 'Escravo',
-      minScore: 0,
-      maxScore: 2.5,
-      verse: '"Quem deve é escravo do seu credor." — Provérbios 22:7',
-      description: 'Você está no nível de Escravo — preso à mentalidade de consumismo, dívidas e busca constante de provisão. Sua vida é controlada por necessidades imediatas e desejos insatisfeitos. Você está em completa dependência de fontes externas e sem controle sobre seu dinheiro. Mas há esperança! Deus deseja libertá-lo dessa escravidão. É hora de quebrar esse ciclo, reconhecer o problema e tomar decisões radicais para mudar seu futuro.',
-      nextStep: 'Tome uma decisão corajosa de mudança: identifique suas dívidas, reduza gastos com o supérfluo, busque orientação financeira e espiritual, e comece a exercer domínio sobre seus impulsos e finanças. A liberdade começa com uma decisão.',
-      icon: '⚫'
-    },
-    1: {
-      name: 'Sobrevivente',
-      minScore: 2.5,
-      maxScore: 3.5,
-      verse: '"Nunca vi desamparado o justo, nem a sua descendência mendigar o pão." — Salmos 37:25',
-      description: 'Você está no nível de Sobrevivente — focado em suprir as necessidades básicas do dia a dia. Sua mentalidade ainda é de carência e proteção, mas você saiu do ciclo de escravidão. Deus promete que suas necessidades não faltarão, mas é hora de evoluir. Você precisa fortalecer sua fé em Deus, reorganizar sua vida financeira com intenção e começar a mudar sua mentalidade de escassez para mentalidade de conquistador(a).',
-      nextStep: 'Fortaleça sua base espiritual: estude os princípios bíblicos do dinheiro, organize seu orçamento, comece a dizimar com fé e mude sua mentalidade de sobrevivência para prosperidade.',
-      icon: '🔵'
-    },
-    2: {
-      name: 'Conquistador',
-      minScore: 3.5,
-      maxScore: 4.5,
-      verse: '"Sede fortes e corajosos. Não tenhais medo nem vos assusteis, porque o Senhor, vosso Deus, vai convosco." — Josué 1:9',
-      description: 'Você é um(a) Conquistador(a)! Já saiu da mentalidade de sobrevivência e tem coragem de sonhar, agir e conquistar sua terra prometida. Você realiza objetivos, desfruta dos frutos e está em crescimento. Você tem fé ativa e mentalidade de abundância. O próximo nível exige que você desenvolva caráter ainda mais sólido e se prepare para impactar outras vidas — é hora de pensar além de você mesmo.',
-      nextStep: 'Aprofunde seu caráter e integridade: invista continuamente em seu desenvolvimento pessoal, fortaleça relacionamentos de qualidade e comece a pensar estrategicamente em como sua prosperidade pode gerar impacto e oportunidades para outros.',
-      icon: '🟡'
-    },
-    3: {
-      name: 'Governante',
-      minScore: 4.5,
-      maxScore: 5.0,
-      verse: '"E o Senhor estava com José, e ele foi um homem próspero." — Gênesis 39:2',
-      description: 'Você é um(a) Governante! Atingiu o nível máximo de prosperidade bíblica. Como José, você desenvolveu caráter sólido, habilidades únicas e está preparado(a) para receber e executar estratégias de Deus que transformam vidas. Sua prosperidade transcende você — gera emprego, impacto, legado e referência. Você é uma bênção para multidões e seu governo é sinal da sabedoria e favor de Deus.',
-      nextStep: 'Mantenha-se humilde, íntegro(a) e conectado(a) a Deus. Cultive liderança servidora, expanda seu impacto estrategicamente e prepare a próxima geração para governar com excelência e propósito.',
-      icon: '🟢'
-    }
+  get profiles() {
+    return typeof window !== 'undefined' && window.profiles ? window.profiles : [];
   },
 
   webhookUrl: 'https://api.datacrazy.io/v1/crm/api/crm/integrations/webhook/business/2ec20b7f-0a1f-49a1-953b-5120dfef8118',
@@ -146,7 +63,7 @@ const app = {
     }
   },
 
-  sendWebhookData(result, levelData) {
+  sendWebhookData(result, profileData) {
     const webhookData = {
       name: this.userData.name,
       whatsapp: this.userData.whatsapp,
@@ -155,13 +72,9 @@ const app = {
       income: this.userData.income,
       diagnostic_result: {
         level: result.level,
-        level_name: levelData.name,
-        score: parseFloat(result.score.toFixed(1)),
-        pillars: {
-          fazer_dinheiro_novo: parseFloat(result.pillars.fé.toFixed(1)),
-          administrar: parseFloat(result.pillars.mentalidade.toFixed(1)),
-          multiplicar_riqueza: parseFloat(result.pillars.caráter.toFixed(1))
-        }
+        level_name: profileData.name,
+        total_score: result.score,
+        max_score: 45
       },
       timestamp: new Date().toISOString()
     };
@@ -218,67 +131,48 @@ const app = {
     content.innerHTML = `
       <div class="landing-header">
         <div class="landing-icon"></div>
-        <h1 class="landing-title">Diagnóstico dos 3 Níveis da Prosperidade</h1>
-        <p class="landing-subtitle">— Sobrevivente • Conquistador • Governante —</p>
+        <h1 class="landing-title">Diagnóstico de Prosperidade Financeira</h1>
+        <p class="landing-subtitle">— Escravo • Sobrevivente • Conquistador • Governante —</p>
         <p class="landing-description">
-          Você é Sobrevivente, Conquistador ou Governante? Descubra seu nível de prosperidade e o caminho exato para avançar segundo a Palavra de Deus.
+          Descubra em qual nível de prosperidade você está. Um diagnóstico honesto baseado em 15 perguntas estratégicas sobre sua realidade financeira.
         </p>
         <div class="highlight-chips">
-          <div class="chip">✓ 10 Perguntas</div>
-          <div class="chip">✓ Análise em 3 Pilares</div>
-          <div class="chip">✓ Menos de 2 minutos</div>
+          <div class="chip">✓ 15 Perguntas</div>
+          <div class="chip">✓ Diagnóstico Completo</div>
+          <div class="chip">✓ Menos de 5 minutos</div>
         </div>
       </div>
 
-      <h2 class="section-title">Os 3 Pilares Avaliados</h2>
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-icon">💰</div>
-          <div class="card-title">Fazer Dinheiro Novo</div>
-          <div class="card-description">Fé, confiança em Deus e geração de renda</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">📊</div>
-          <div class="card-title">Administrar</div>
-          <div class="card-description">Controle financeiro e organização</div>
-        </div>
-        <div class="card">
-          <div class="card-icon">📈</div>
-          <div class="card-title">Multiplicar Riqueza</div>
-          <div class="card-description">Investimento, metas e impacto</div>
-        </div>
-      </div>
-
-      <h2 class="section-title">Os 4 Níveis da Prosperidade</h2>
+      <h2 class="section-title">Os 4 Níveis de Prosperidade</h2>
       <div class="cards-grid">
         <div class="card level-card level-0">
           <div class="level-badge level-0">Nível 0</div>
           <div class="level-title level-0">Escravo</div>
-          <div class="card-description">Preso à dívida e consumismo. Busca constante de provisão. Dependência externa.</div>
+          <div class="card-description">Preso num ciclo de sobrevivência reativa. O dinheiro controla você.</div>
         </div>
         <div class="card level-card level-1">
           <div class="level-badge level-1">Nível 1</div>
           <div class="level-title level-1">Sobrevivente</div>
-          <div class="card-description">Focado em suprir necessidades básicas. Mentalidade de carência e proteção.</div>
+          <div class="card-description">Paga as contas, mas não avança. Estabilidade frágil e insegura.</div>
         </div>
         <div class="card level-card level-2">
           <div class="level-badge level-2">Nível 2</div>
           <div class="level-title level-2">Conquistador</div>
-          <div class="card-description">Sai da mentalidade de sobrevivência. Tem coragem, sonha e age com propósito.</div>
+          <div class="card-description">Em movimento e crescimento. Começa a construir independência.</div>
         </div>
         <div class="card level-card level-3">
           <div class="level-badge level-3">Nível 3</div>
           <div class="level-title level-3">Governante</div>
-          <div class="card-description">Caráter sólido. Impacta vidas. Estratégia de Deus que transforma multidões.</div>
+          <div class="card-description">Ativos, visão de longo prazo, influência e legado.</div>
         </div>
       </div>
 
       <div style="text-align: center; margin-top: 50px;">
         <button class="form-button" style="max-width: 350px; background-color: #27AE60;" data-action="startDiagnosis">
-          🕊️ Iniciar Diagnóstico →
+          💰 Iniciar Diagnóstico →
         </button>
         <p style="margin-top: 20px; font-size: 0.9rem; color: var(--color-text-secondary);">
-          ⏱ Tempo estimado: 1 a 2 minutos
+          ⏱ Tempo estimado: 3 a 5 minutos
         </p>
       </div>
     `;
@@ -366,29 +260,19 @@ const app = {
     const container = document.createElement('div');
     container.className = 'quiz-container';
 
-    const currentQuestion = this.questions[this.currentQuestionIndex];
+    const questions = this.questions;
+    if (!questions || questions.length === 0) return screen;
+
+    const currentQuestion = questions[this.currentQuestionIndex];
     const totalAnswered = Object.keys(this.answers).length;
-    const progressPercent = Math.round((totalAnswered / this.questions.length) * 100);
-
-    const pillarEmojis = {
-      'fé': '💰',
-      'mentalidade': '📊',
-      'caráter': '📈'
-    };
-
-    const pillarNames = {
-      'fé': 'Fazer Dinheiro Novo',
-      'mentalidade': 'Administrar',
-      'caráter': 'Multiplicar Riqueza'
-    };
+    const progressPercent = Math.round((totalAnswered / questions.length) * 100);
 
     container.innerHTML = `
       <div class="quiz-header">
-        <div class="quiz-pillar">
-          <div class="quiz-pillar-badge">${pillarEmojis[currentQuestion.pillar]}</div>
-          <div class="quiz-pillar-text">${pillarNames[currentQuestion.pillar]}</div>
+        <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: 10px;">
+          ${currentQuestion.block}
         </div>
-        <div class="quiz-progress-label">Pergunta ${currentQuestion.id} de 10</div>
+        <div class="quiz-progress-label">Pergunta ${currentQuestion.id} de ${questions.length}</div>
         <div class="quiz-percentage">${progressPercent}%</div>
       </div>
 
@@ -401,22 +285,18 @@ const app = {
         <p class="quiz-question-text">${currentQuestion.text}</p>
       </div>
 
-      <div class="quiz-scale">
-        <span>🔴 Discordo totalmente</span>
-        <span>Concordo totalmente 🟢</span>
-      </div>
-
       <div class="quiz-options" id="quizOptions">
-        ${[1, 2, 3, 4, 5].map(value => {
-          const isSelected = this.answers[currentQuestion.id] === value;
+        ${currentQuestion.options.map((option, idx) => {
+          const isSelected = this.answers[currentQuestion.id] === idx;
           return `
             <button
               type="button"
-              class="quiz-option ${isSelected ? 'selected' : ''}"
-              data-value="${value}"
+              class="quiz-option-multiple ${isSelected ? 'selected' : ''}"
+              data-value="${idx}"
               data-question="${currentQuestion.id}"
             >
-              ${value}
+              <span class="option-letter">${String.fromCharCode(65 + idx)}</span>
+              <span class="option-text">${option.text}</span>
             </button>
           `;
         }).join('')}
@@ -431,7 +311,7 @@ const app = {
         >
           ← Anterior
         </button>
-        <div class="quiz-counter">${totalAnswered} de ${this.questions.length} respondidas</div>
+        <div class="quiz-counter">${totalAnswered} de ${questions.length} respondidas</div>
       </div>
     `;
 
@@ -442,10 +322,13 @@ const app = {
 
   createResultScreen() {
     const result = this.calculateResult();
-    const levelData = this.levels[result.level];
+    const profiles = this.profiles;
+    const profileData = profiles.find(p => p.level === result.level);
+
+    if (!profileData) return document.createElement('div');
 
     // Enviar dados para o webhook DataCrazy
-    this.sendWebhookData(result, levelData);
+    this.sendWebhookData(result, profileData);
 
     const screen = document.createElement('div');
     screen.className = 'screen result-screen';
@@ -457,6 +340,7 @@ const app = {
     container.className = 'result-container';
 
     const levelColors = {
+      0: { bg: '#F5E6E6', text: '#6B3333', border: '#D9A6A6' },
       1: { bg: '#E6F1FB', text: '#0C447C', border: '#B5D4F4' },
       2: { bg: '#FAEEDA', text: '#633806', border: '#FAC775' },
       3: { bg: '#EAF3DE', text: '#27500A', border: '#C0DD97' }
@@ -472,56 +356,15 @@ const app = {
       </div>
 
       <div class="result-level" style="background-color: ${colors.bg}; border: 2px solid ${colors.border};">
-        <div class="result-level-title" style="color: ${colors.text}; margin-bottom: 15px;">Nível ${result.level}: ${levelData.icon} ${levelData.name}</div>
+        <div class="result-level-title" style="color: ${colors.text}; margin-bottom: 15px;">Nível ${result.level}: ${profileData.icon} ${profileData.name}</div>
         <div style="text-align: center;">
-          <div class="result-score" style="color: ${colors.text};">${result.score.toFixed(1)}</div>
-          <div class="result-score-label" style="color: ${colors.text};">de 5.0</div>
+          <div class="result-score" style="color: ${colors.text};">${result.score}</div>
+          <div class="result-score-label" style="color: ${colors.text};">de 45 pontos</div>
         </div>
       </div>
 
       <div class="result-description">
-        ${levelData.description}
-      </div>
-
-      <div class="result-verse">
-        ${levelData.verse}
-      </div>
-
-      <h3 style="font-size: 1.1rem; margin-bottom: 20px; color: var(--color-text-primary); font-weight: 600;">
-        Análise dos 3 Pilares
-      </h3>
-
-      <div class="chart-container">
-        <canvas id="radarChart"></canvas>
-      </div>
-
-      <div class="pillars-breakdown">
-        <div class="pillar-result pillar-1">
-          <div class="pillar-result-title">💰 Fazer Dinheiro Novo</div>
-          <div class="pillar-result-score pillar-1">${result.pillars.fé.toFixed(1)}</div>
-          <div class="progress-bar-container">
-            <div class="progress-bar-fill pillar-1" style="width: ${(result.pillars.fé / 5) * 100}%"></div>
-          </div>
-          <div class="pillar-result-label">${(result.pillars.fé / 5 * 100).toFixed(0)}% completado</div>
-        </div>
-
-        <div class="pillar-result pillar-2">
-          <div class="pillar-result-title">📊 Administrar</div>
-          <div class="pillar-result-score pillar-2">${result.pillars.mentalidade.toFixed(1)}</div>
-          <div class="progress-bar-container">
-            <div class="progress-bar-fill pillar-2" style="width: ${(result.pillars.mentalidade / 5) * 100}%"></div>
-          </div>
-          <div class="pillar-result-label">${(result.pillars.mentalidade / 5 * 100).toFixed(0)}% completado</div>
-        </div>
-
-        <div class="pillar-result pillar-3">
-          <div class="pillar-result-title">📈 Multiplicar Riqueza</div>
-          <div class="pillar-result-score pillar-3">${result.pillars.caráter.toFixed(1)}</div>
-          <div class="progress-bar-container">
-            <div class="progress-bar-fill pillar-3" style="width: ${(result.pillars.caráter / 5) * 100}%"></div>
-          </div>
-          <div class="pillar-result-label">${(result.pillars.caráter / 5 * 100).toFixed(0)}% completado</div>
-        </div>
+        ${profileData.description}
       </div>
 
       <button class="result-button" data-action="restartDiagnosis">
@@ -532,136 +375,33 @@ const app = {
     content.appendChild(container);
     screen.appendChild(content);
 
-    // Renderizar gráfico após DOM estar pronto
-    setTimeout(() => this.renderRadarChart(result), 100);
-
     return screen;
   },
 
-  renderRadarChart(result) {
-    const ctx = document.getElementById('radarChart');
-    if (!ctx || !result) return;
-
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-    }
-
-    this.chartInstance = new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: ['Fazer Dinheiro Novo', 'Administrar', 'Multiplicar Riqueza'],
-        datasets: [
-          {
-            label: 'Sua Pontuação',
-            data: [result.pillars.fé, result.pillars.mentalidade, result.pillars.caráter],
-            borderColor: '#D4AF37',
-            backgroundColor: 'rgba(212, 175, 55, 0.15)',
-            borderWidth: 2,
-            pointBackgroundColor: '#D4AF37',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            fill: true
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        layout: {
-          padding: 30
-        },
-        scales: {
-          r: {
-            min: 0,
-            max: 5,
-            ticks: {
-              stepSize: 1,
-              font: { size: 10 },
-              color: '#999',
-              padding: 10
-            },
-            grid: {
-              color: 'rgba(212, 175, 55, 0.1)'
-            },
-            pointLabels: {
-              font: { size: 11, weight: '500' },
-              color: '#B0B0B0',
-              padding: 15,
-              display: true
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-              font: { size: 11 },
-              color: '#B0B0B0',
-              padding: 20
-            }
-          },
-          filler: {
-            propagate: true
-          }
-        }
-      }
-    });
-  },
-
   calculateResult() {
-    const pillars = {
-      fé: 0,
-      mentalidade: 0,
-      caráter: 0
-    };
+    const questions = this.questions;
+    const profiles = this.profiles;
+    let totalScore = 0;
 
-    const pillarCounts = {
-      fé: 0,
-      mentalidade: 0,
-      caráter: 0
-    };
-
-    this.questions.forEach(question => {
-      if (this.answers[question.id]) {
-        // Se a pergunta é invertida, converter a resposta
-        let value = this.answers[question.id];
-        if (question.inverted) {
-          value = 6 - value; // Inverter: 5→1, 4→2, 3→3, 2→4, 1→5
-        }
-
-        pillars[question.pillar] += value;
-        pillarCounts[question.pillar]++;
+    // Somar todos os pontos das respostas
+    questions.forEach(question => {
+      if (this.answers[question.id] !== undefined) {
+        const optionIndex = this.answers[question.id];
+        const points = question.options[optionIndex].points;
+        totalScore += points;
       }
     });
 
-    // Calcular média por pilar
-    Object.keys(pillars).forEach(pillar => {
-      if (pillarCounts[pillar] > 0) {
-        pillars[pillar] = pillars[pillar] / pillarCounts[pillar];
-      }
-    });
-
-    // Calcular score geral
-    const score = (pillars.fé + pillars.mentalidade + pillars.caráter) / 3;
-
-    // Determinar nível baseado no score geral
-    // Faixas: Escravo (≤2.5) | Sobrevivente (2.5-3.5) | Conquistador (3.5-4.5) | Governante (>4.5)
+    // Determinar nível baseado na faixa de pontos
     let level = 0;
-
-    if (score <= 2.5) {
-      level = 0; // Escravo
-    } else if (score <= 3.5) {
-      level = 1; // Sobrevivente
-    } else if (score <= 4.5) {
-      level = 2; // Conquistador
-    } else {
-      level = 3; // Governante
+    for (let i = profiles.length - 1; i >= 0; i--) {
+      if (totalScore >= profiles[i].minScore) {
+        level = profiles[i].level;
+        break;
+      }
     }
 
-    return { score, pillars, level };
+    return { score: totalScore, level };
   },
 
   attachEventListeners() {
@@ -708,12 +448,13 @@ const app = {
       updateButtonState();
     }
 
-    // Quiz screen
-    const optionButtons = document.querySelectorAll('.quiz-option');
+    // Quiz screen - Multiple choice options
+    const optionButtons = document.querySelectorAll('.quiz-option-multiple');
     optionButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const questionId = parseInt(e.target.dataset.question);
-        const value = parseInt(e.target.dataset.value);
+        const target = e.currentTarget;
+        const questionId = parseInt(target.dataset.question);
+        const value = parseInt(target.dataset.value);
 
         this.answers[questionId] = value;
 
@@ -721,7 +462,7 @@ const app = {
         document.querySelectorAll(`[data-question="${questionId}"]`).forEach(b => {
           b.classList.remove('selected');
         });
-        e.target.classList.add('selected');
+        target.classList.add('selected');
 
         // Avançar após 300ms
         setTimeout(() => this.nextQuestion(), 300);
