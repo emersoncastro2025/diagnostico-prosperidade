@@ -231,11 +231,12 @@ const app = {
           </label>
           <select class="form-select" id="incomeInput" required>
             <option value="">Selecione uma faixa</option>
-            <option value="ate-2000">Até R$ 2.000</option>
-            <option value="2001-5000">R$ 2.001 – R$ 5.000</option>
-            <option value="5001-10000">R$ 5.001 – R$ 10.000</option>
-            <option value="10001-20000">R$ 10.001 – R$ 20.000</option>
-            <option value="acima-20000">Acima de R$ 20.000</option>
+            <option value="menos-10000">Menos de R$ 10 mil/mês</option>
+            <option value="10000-20000">De R$ 10 mil a R$ 20 mil/mês</option>
+            <option value="20000-40000">De R$ 20 mil a R$ 40 mil/mês</option>
+            <option value="40000-60000">De R$ 40 mil a R$ 60 mil/mês</option>
+            <option value="60000-100000">De R$ 60 mil a R$ 100 mil/mês</option>
+            <option value="acima-100000">Acima de R$ 100 mil/mês</option>
           </select>
         </div>
 
